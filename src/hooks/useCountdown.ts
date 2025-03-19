@@ -1,4 +1,3 @@
-// useCountdown.ts
 import { useEffect, useCallback, useState, useRef } from "react";
 
 export const useCountdown = (initialTime: number, onEnd?: () => void) => {

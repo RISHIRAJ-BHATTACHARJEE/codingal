@@ -12,43 +12,44 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Textarea } from "./ui/textarea";
 
 const INTERRUPTED_REASONS = [
-  'Student didn\'t show up for the class.',
-  'Student didn\'t show any interest.',
-  'Student got disconnected.',
-  'I got disconnected.',
-  'Other reason',
+  "Student didn't show up for the class.",
+  "Student didn't show any interest.",
+  "Student got disconnected.",
+  "I got disconnected.",
+  "Other reason",
 ] as const;
 
-type InterruptedReason = typeof INTERRUPTED_REASONS[number];
-type ReasonType = 'completed' | InterruptedReason;
+type InterruptedReason = (typeof INTERRUPTED_REASONS)[number];
+type ReasonType = "completed" | InterruptedReason;
 
 const EndClassModal = ({ onEnd }: { onEnd: () => void }) => {
-  const [selectedReason, setSelectedReason] = useState<ReasonType | ''>('');
+  const [selectedReason, setSelectedReason] = useState<ReasonType | "">("");
   const [isInterrupted, setIsInterrupted] = useState(false);
-  const [otherReason, setOtherReason] = useState('');
+  const [otherReason, setOtherReason] = useState("");
   const [open, setOpen] = useState(false);
 
   const handleConfirm = useCallback(() => {
-    if (!selectedReason || (selectedReason === 'Other reason' && !otherReason)) return;
+    if (!selectedReason || (selectedReason === "Other reason" && !otherReason))
+      return;
     onEnd();
     setOpen(false);
   }, [selectedReason, otherReason, onEnd]);
 
   const handleCompletedChange = useCallback((checked: boolean) => {
     if (checked) {
-      setSelectedReason('completed');
+      setSelectedReason("completed");
       setIsInterrupted(false);
     } else {
-      setSelectedReason('');
+      setSelectedReason("");
     }
   }, []);
 
   const handleInterruptedToggle = useCallback((checked: boolean) => {
     setIsInterrupted(checked);
     if (checked) {
-      setSelectedReason('');
+      setSelectedReason("");
     } else {
-      setSelectedReason('');
+      setSelectedReason("");
     }
   }, []);
 
@@ -57,13 +58,13 @@ const EndClassModal = ({ onEnd }: { onEnd: () => void }) => {
     setIsInterrupted(true);
   }, []);
 
-  const isConfirmDisabled = !selectedReason || 
-    (selectedReason === 'Other reason' && !otherReason);
+  const isConfirmDisabled =
+    !selectedReason || (selectedReason === "Other reason" && !otherReason);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-[#FF5A44] px-5 py-2 rounded-md text-white">
+        <Button className="bg-[#FF5A44] px-5 py-2 rounded-sm text-white cursor-pointer">
           End Class
         </Button>
       </DialogTrigger>
@@ -74,7 +75,6 @@ const EndClassModal = ({ onEnd }: { onEnd: () => void }) => {
           </DialogTitle>
         </DialogHeader>
 
-        {/* Radio Buttons */}
         <div className="px-6 -my-2">
           <label className="flex items-center gap-2 cursor-pointer">
             <Checkbox
@@ -95,7 +95,6 @@ const EndClassModal = ({ onEnd }: { onEnd: () => void }) => {
           </label>
         </div>
 
-        {/* Expanding Interrupted Options */}
         <AnimatePresence>
           {isInterrupted && (
             <motion.div
@@ -121,7 +120,6 @@ const EndClassModal = ({ onEnd }: { onEnd: () => void }) => {
                 </label>
               ))}
 
-              {/* Expanding Textarea for "Other reason" */}
               {selectedReason === "Other reason" && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
@@ -142,7 +140,6 @@ const EndClassModal = ({ onEnd }: { onEnd: () => void }) => {
           )}
         </AnimatePresence>
 
-        {/* Action Buttons */}
         <div className="flex px-6 gap-3 pt-10">
           <Button
             className="bg-[#FF5A44] text-white px-7 py-1.5 rounded-sm disabled:opacity-50 cursor-pointer"
