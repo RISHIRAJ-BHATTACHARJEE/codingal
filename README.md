@@ -1,3 +1,7 @@
+# NOTE: I have used Bun.js over Node.js because Bun.js offers faster performance and lower memory usage compared to Node.js
+
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
